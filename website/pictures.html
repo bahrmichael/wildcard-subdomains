@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <script>
+        function updateText() {
+            const subdomain = window.location.host.split('.')[0];
+
+            const apiKey = '9lBEnSMUnbcAXlMK0tNrZngfR-Q1GLWllb9AWPnhiyw';
+            fetch(`https://api.unsplash.com/search/photos/?query=${subdomain}&orientation=landscape&client_id=${apiKey}`, {
+                headers: {
+                    'Accept-Version': 'v1',
+                    'SameSite': 'Strict'
+                }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    const pick = data.results[Math.floor(Math.random() * data.results.length)];
+                    const url = pick.urls.regular || pick.urls.full;
+
+                    document.getElementById("canvas").src = url;
+                    document.getElementById("credits").textContent = `Credits: ${pick.user.name}, Unsplash`;
+                })
+                .catch((err) => {
+                    console.error(err);
+                    alert(`Failed to load a picture for '${subdomain}'. Please try again and check the console logs.`);
+                })
+        }
+        window.onload = updateText;
+    </script>
+</head>
+<body style="margin: 0">
+    <p id="credits" style="position: absolute; top: 10px; left: 10px; background-color: white; padding: 5px"></p>
+    <img id="canvas" src="" style="width: 100vw; height: 100vh; object-fit: cover; margin: 0;"/>
+</body>
