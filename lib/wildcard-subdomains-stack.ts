@@ -11,7 +11,7 @@ export class WildcardSubdomainsStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     
-    this.domain = "the-pictures.bahr.dev";
+    this.domain = "picture.bahr.dev";
     
     // Requires environment, you must specify env for the stack.
     const hostedZone = HostedZone.fromLookup(this, 'HostedZone', { domainName: this.domain });
